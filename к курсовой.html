@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Учебный блог по вёрстке страниц. Статьи по HTML, CSS, адаптивному дизайну и системе тегов.">
+    <title>Учебный блог по вёрстке страниц</title>
+    <style>
+        :root {
+            --color-primary: #1a5f7a;
+            --color-secondary: #0d3b4f;
+            --color-accent: #2c8fb5;
+            --color-bg: #f0f4f8;
+            --color-white: #ffffff;
+            --color-text: #1a2a3a;
+            --color-text-light: #4a5a6a;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        .page {
+            display: grid;
+            grid-template-areas:
+                "header header"
+                "nav nav"
+                "main sidebar"
+                "footer footer";
+            grid-template-columns: 1fr 280px;
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            grid-area: header;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .header__title {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .header__subtitle {
+            font-size: 1rem;
+            opacity: 0.85;
+        }
+
+        .nav {
+            grid-area: nav;
+            background-color: var(--color-secondary);
+        }
+
+        .nav__list {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav__item {
+            margin: 0;
+        }
+
+        .nav__link {
+            display: block;
+            padding: 12px 24px;
+            color: var(--color-white);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav__link:hover {
+            background-color: var(--color-accent);
+        }
+
+        .main {
+            grid-area: main;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--color-white);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--shadow-hover);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e0e6ed;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card__content {
+            padding: 18px;
+            flex: 1;
+        }
+
+        .card__title {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .card__title a {
+            text-decoration: none;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .card__title a:hover {
+            color: var(--color-accent);
+        }
+
+        .card__date {
+            font-size: 0.8rem;
+            color: var(--color-text-light);
+            margin-bottom: 10px;
+        }
+
+        .card__description {
+            margin-bottom: 12px;
+            color: var(--color-text);
+            font-size: 0.9rem;
+        }
+
+        .card__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            background-color: #e8edf2;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .tag:hover {
+            background-color: var(--color-accent);
+            color: var(--color-white);
+        }
+
+        .tag--size-large {
+            font-size: 1.1rem;
+            padding: 5px 14px;
+        }
+
+        .tag--size-medium {
+            font-size: 0.9rem;
+            padding: 4px 12px;
+        }
+
+        .tag--size-small {
+            font-size: 0.75rem;
+            padding: 3px 10px;
+        }
+
+        .card__link {
+            display: inline-block;
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .card__link:hover {
+            color: var(--color-primary);
+            text-decoration: underline;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+        }
+
+        .widget {
+            background-color: var(--color-white);
+            padding: 18px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e6ed;
+        }
+
+        .widget__title {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--color-primary);
+            border-bottom: 2px solid var(--color-accent);
+            padding-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .footer {
+            grid-area: footer;
+            background-color: var(--color-secondary);
+            color: var(--color-white);
+            text-align: center;
+            padding: 16px;
+            margin-top: 10px;
+        }
+
+        .footer__text {
+            margin: 4px 0;
+            font-size: 0.8rem;
+        }
+
+        .footer__link {
+            color: var(--color-white);
+            text-decoration: none;
+        }
+
+        .footer__link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .page {
+                grid-template-areas:
+                    "header"
+                    "nav"
+                    "main"
+                    "sidebar"
+                    "footer";
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .nav__list {
+                flex-wrap: wrap;
+            }
+
+            .header__title {
+                font-size: 1.5rem;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page {
+                padding: 10px;
+            }
+
+            .card__content {
+                padding: 12px;
+            }
+
+            .header__title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <h1 class="header__title">Учебный блог по вёрстке страниц</h1>
+            <p class="header__subtitle">Изучай HTML, CSS и создавай современные сайты</p>
+        </header>
+
+        <nav class="nav">
+            <ul class="nav__list">
+                <li class="nav__item"><a href="index.html" class="nav__link">Главная</a></li>
+                <li class="nav__item"><a href="all-tags.html" class="nav__link">Все теги</a></li>
+                <li class="nav__item"><a href="contacts.html" class="nav__link">Контакты</a></li>
+            </ul>
+        </nav>
+
+        <main class="main">
+            <div class="cards">
+                <article class="card">
+                    <div class="card__content">
+                        <h2 class="card__title">
+                            <a href="article-html-basics.html">Основы HTML: семантическая вёрстка</a>
+                        </h2>
+                        <div class="card__date">15 мая 2026</div>
+                        <p class="card__description">Изучаем основные теги HTML5, семантическую структуру документа и принципы доступности веб-страниц.</p>
+                        <div class="card__tags">
+                            <a href="tag-html.html" class="tag">HTML</a>
+                            <a href="tag-semantics.html" class="tag">семантика</a>
+                            <a href="tag-basics.html" class="tag">основы</a>
+                        </div>
+                        <a href="article-html-basics.html" class="card__link">Читать далее →</a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card__content">
+                        <h2 class="card__title">
+                            <a href="article-css-basics.html">Основы CSS: селекторы и свойства</a>
+                        </h2>
+                        <div class="card__date">18 мая 2026</div>
+                        <p class="card__description">Разбираем основные селекторы CSS, свойства, принципы каскадирования и наследования.</p>
+                        <div class="card__tags">
+                            <a href="tag-css.html" class="tag">CSS</a>
+                            <a href="tag-basics.html" class="tag">основы</a>
+                        </div>
+                        <a href="article-css-basics.html" class="card__link">Читать далее →</a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card__content">
+                        <h2 class="card__title">
+                            <a href="article-flexbox.html">Flexbox: гибкая компоновка элементов</a>
+                        </h2>
+                        <div class="card__date">22 мая 2026</div>
+                        <p class="card__description">Полное руководство по Flexbox: основные свойства, примеры использования и типовые макеты.</p>
+                        <div class="card__tags">
+                            <a href="tag-css.html" class="tag">CSS</a>
+                            <a href="tag-flexbox.html" class="tag">flexbox</a>
+                            <a href="tag-layout.html" class="tag">компоновка</a>
+                        </div>
+                        <a href="article-flexbox.html" class="card__link">Читать далее →</a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card__content">
+                        <h2 class="card__title">
+                            <a href="article-grid.html">CSS Grid: мощная система сеток</a>
+                        </h2>
+                        <div class="card__date">25 мая 2026</div>
+                        <p class="card__description">Осваиваем CSS Grid Layout: создание сложных сеток, управление строками и колонками.</p>
+                        <div class="card__tags">
+                            <a href="tag-css.html" class="tag">CSS</a>
+                            <a href="tag-grid.html" class="tag">grid</a>
+                            <a href="tag-layout.html" class="tag">компоновка</a>
+                        </div>
+                        <a href="article-grid.html" class="card__link">Читать далее →</a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card__content">
+                        <h2 class="card__title">
+                            <a href="article-responsive.html">Адаптивный дизайн: медиазапросы</a>
+                        </h2>
+                        <div class="card__date">28 мая 2026</div>
+                        <p class="card__description">Как сделать сайт удобным на любых устройствах: медиазапросы, резиновая вёрстка, Mobile First.</p>
+                        <div class="card__tags">
+                            <a href="tag-css.html" class="tag">CSS</a>
+                            <a href="tag-responsive.html" class="tag">адаптивный дизайн</a>
+                            <a href="tag-mediaqueries.html" class="tag">медиазапросы</a>
+                        </div>
+                        <a href="article-responsive.html" class="card__link">Читать далее →</a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card__content">
+                        <h2 class="card__title">
+                            <a href="article-bem.html">Методология БЭМ: организация кода</a>
+                        </h2>
+                        <div class="card__date">30 мая 2026</div>
+                        <p class="card__description">Внедряем методологию БЭМ (Блок, Элемент, Модификатор) для чистого и поддерживаемого CSS-кода.</p>
+                        <div class="card__tags">
+                            <a href="tag-css.html" class="tag">CSS</a>
+                            <a href="tag-bem.html" class="tag">БЭМ</a>
+                            <a href="tag-architecture.html" class="tag">архитектура</a>
+                        </div>
+                        <a href="article-bem.html" class="card__link">Читать далее →</a>
+                    </div>
+                </article>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="widget">
+                <h3 class="widget__title">О блоге</h3>
+                <p>Этот блог создан в рамках курсовой работы по дисциплине «Вёрстка страниц». Здесь собраны статьи по основным темам веб-вёрстки.</p>
+                <p style="margin-top: 8px;">Используйте систему тегов для быстрой навигации по материалу.</p>
+            </div>
+
+            <div class="widget">
+                <h3 class="widget__title">Популярные теги</h3>
+                <div class="tag-cloud">
+                    <a href="tag-html.html" class="tag tag--size-large">HTML</a>
+                    <a href="tag-css.html" class="tag tag--size-large">CSS</a>
+                    <a href="tag-basics.html" class="tag tag--size-medium">основы</a>
+                    <a href="tag-flexbox.html" class="tag tag--size-medium">flexbox</a>
+                    <a href="tag-grid.html" class="tag tag--size-medium">grid</a>
+                    <a href="tag-responsive.html" class="tag tag--size-medium">адаптивный дизайн</a>
+                    <a href="tag-layout.html" class="tag tag--size-small">компоновка</a>
+                    <a href="tag-semantics.html" class="tag tag--size-small">семантика</a>
+                    <a href="tag-bem.html" class="tag tag--size-small">БЭМ</a>
+                    <a href="tag-mediaqueries.html" class="tag tag--size-small">медиазапросы</a>
+                    <a href="tag-architecture.html" class="tag tag--size-small">архитектура</a>
+                </div>
+            </div>
+        </aside>
+
+        <footer class="footer">
+            <p class="footer__text">© 2026 Учебный блог по вёрстке страниц</p>
+            <p class="footer__text">Курсовая работа по дисциплине МДК.03.02 «Вёрстка страниц»</p>
+            <p class="footer__text">
+                <a href="index.html" class="footer__link">Главная</a> |
+                <a href="all-tags.html" class="footer__link">Все теги</a> |
+                <a href="contacts.html" class="footer__link">Контакты</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
