@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Учебный блог по вёрстке страниц. Статьи по HTML, CSS, адаптивному дизайну и системе тегов.">
+    <title>Учебный блог по вёрстке страниц</title>
+    <style>
+        :root {
+            --color-primary: #1a5f7a;
+            --color-secondary: #0d3b4f;
+            --color-accent: #2c8fb5;
+            --color-bg: #f0f4f8;
+            --color-white: #ffffff;
+            --color-text: #1a2a3a;
+            --color-text-light: #4a5a6a;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        .page {
+            display: grid;
+            grid-template-areas:
+                "header header"
+                "nav nav"
+                "main sidebar"
+                "footer footer";
+            grid-template-columns: 1fr 280px;
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            grid-area: header;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .header__title {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .header__subtitle {
+            font-size: 1rem;
+            opacity: 0.85;
+        }
+
+        .nav {
+            grid-area: nav;
+            background-color: var(--color-secondary);
+        }
+
+        .nav__list {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav__item {
+            margin: 0;
+        }
+
+        .nav__link {
+            display: block;
+            padding: 12px 24px;
+            color: var(--color-white);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav__link:hover {
+            background-color: var(--color-accent);
+        }
+
+        .main {
+            grid-area: main;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--color-white);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: box-shadow 0.2s ease;
+            border: 1px solid #e0e6ed;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card__content {
+            padding: 18px;
+            flex: 1;
+        }
+
+        .card__title {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .card__title a {
+            text-decoration: none;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .card__title a:hover {
+            color: var(--color-accent);
+            text-decoration: underline;
+        }
+
+        .card__date {
+            font-size: 0.8rem;
+            color: var(--color-text-light);
+            margin-bottom: 10px;
+        }
+
+        .card__description {
+            margin-bottom: 12px;
+            color: var(--color-text);
+            font-size: 0.9rem;
+        }
+
+        .card__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            background-color: #e8edf2;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 4px;
+        }
+
+        .tag:hover {
+            background-color: var(--color-accent);
+            color: var(--color-white);
+        }
+
+        .tag--size-large {
+            font-size: 1.1rem;
+            padding: 5px 14px;
+        }
+
+        .tag--size-medium {
+            font-size: 0.9rem;
+            padding: 4px 12px;
+        }
+
+        .tag--size-small {
+            font-size: 0.75rem;
+            padding: 3px 10px;
+        }
+
+        .card__link {
+            display: inline-block;
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .card__link:hover {
+            color: var(--color-primary);
+            text-decoration: underline;
+        }
+
+        .article-full {
+            background-color: var(--color-white);
+            padding: 25px;
+            border: 1px solid #e0e6ed;
+        }
+
+        .article-full__title {
+            font-size: 1.8rem;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+        }
+
+        .article-full__meta {
+            color: var(--color-text-light);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e6ed;
+        }
+
+        .article-full__content {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .article-full__content h3 {
+            margin: 20px 0 10px 0;
+            color: var(--color-secondary);
+        }
+
+        .article-full__content p {
+            margin-bottom: 15px;
+        }
+
+        .article-full__content pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .article-full__content code {
+            background: #f4f4f4;
+            color: #c7254e;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        .article-full__content pre code {
+            background: transparent;
+            color: #d4d4d4;
+            padding: 0;
+            font-size: 0.9rem;
+        }
+
+        .widget {
+            background-color: var(--color-white);
+            padding: 18px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e6ed;
+        }
+
+        .widget__title {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--color-primary);
+            border-bottom: 2px solid var(--color-accent);
+            padding-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .breadcrumbs {
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+        }
+
+        .breadcrumbs__link {
+            color: var(--color-accent);
+            text-decoration: none;
+        }
+
+        .breadcrumbs__link:hover {
+            text-decoration: underline;
+        }
+
+        .page-title {
+            margin-bottom: 20px;
+            color: var(--color-primary);
+            border-bottom: 2px solid var(--color-accent);
+            padding-bottom: 8px;
+            font-size: 1.4rem;
+        }
+
+        .footer {
+            grid-area: footer;
+            background-color: var(--color-secondary);
+            color: var(--color-white);
+            text-align: center;
+            padding: 16px;
+            margin-top: 10px;
+        }
+
+        .footer__text {
+            margin: 4px 0;
+            font-size: 0.8rem;
+        }
+
+        .footer__link {
+            color: var(--color-white);
+            text-decoration: none;
+        }
+
+        .footer__link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .page {
+                grid-template-areas:
+                    "header"
+                    "nav"
+                    "main"
+                    "sidebar"
+                    "footer";
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 15px;
+            }
+            .nav__list {
+                flex-wrap: wrap;
+            }
+            .header__title {
+                font-size: 1.5rem;
+            }
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page {
+                padding: 10px;
+            }
+            .card__content {
+                padding: 12px;
+            }
+            .header__title {
+                font-size: 1.3rem;
+            }
+            .article-full__content pre {
+                font-size: 0.8rem;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <h1 class="header__title">Учебный блог по вёрстке страниц</h1>
+            <p class="header__subtitle">Изучай HTML, CSS и создавай современные сайты</p>
+        </header>
+
+        <nav class="nav">
+            <ul class="nav__list">
+                <li class="nav__item"><a href="#" class="nav__link" data-page="home">Главная</a></li>
+                <li class="nav__item"><a href="#" class="nav__link" data-page="all-tags">Все теги</a></li>
+                <li class="nav__item"><a href="#" class="nav__link" data-page="contacts">Контакты</a></li>
+            </ul>
+        </nav>
+
+        <main class="main" id="mainContent"></main>
+
+        <aside class="sidebar" id="sidebarContent"></aside>
+
+        <footer class="footer">
+            <p class="footer__text"> 2026 Учебный блог по вёрстке страниц</p>
+            <p class="footer__text">Курсовая работа по дисциплине «Вёрстка страниц»</p>
+            <p class="footer__text">
+                <a href="#" class="footer__link" data-page="home">Главная</a> |
+                <a href="#" class="footer__link" data-page="all-tags">Все теги</a> |
+                <a href="#" class="footer__link" data-page="contacts">Контакты</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        const articles = [
+            {
+                id: "html-basics",
+                title: "Основы HTML: семантическая вёрстка",
+                date: "15 мая 2026",
+                description: "Изучаем основные теги HTML5, семантическую структуру документа и принципы доступности веб-страниц.",
+                tags: ["HTML", "семантика", "основы"],
+                content: `
+                    <h3>Что такое семантическая вёрстка?</h3>
+                    <p>Семантическая вёрстка — это подход к созданию HTML-документов, при котором каждый элемент несёт смысловую нагрузку. Вместо универсальных <code>&lt;div&gt;</code> и <code>&lt;span&gt;</code> используются специализированные теги: <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;aside&gt;</code> и <code>&lt;footer&gt;</code>.</p>
+                    <p>Преимущества семантики: улучшенная доступность для скринридеров, лучшее SEO, понятная структура кода.</p>
+                    <pre><code>&lt;header&gt;Шапка сайта&lt;/header&gt;
+&lt;nav&gt;Навигация&lt;/nav&gt;
+&lt;main&gt;
+    &lt;article&gt;Основной контент&lt;/article&gt;
+&lt;/main&gt;
+&lt;footer&gt;Подвал&lt;/footer&gt;</code></pre>
+                `
+            },
+            {
+                id: "css-basics",
+                title: "Основы CSS: селекторы и свойства",
+                date: "18 мая 2026",
+                description: "Разбираем основные селекторы CSS, свойства, принципы каскадирования и наследования.",
+                tags: ["CSS", "основы"],
+                content: `
+                    <h3>Введение в CSS</h3>
+                    <p>Каскадные таблицы стилей (CSS) отвечают за внешний вид веб-страниц. Основной синтаксис: селектор { свойство: значение; }.</p>
+                    <pre><code>/* Селектор класса */
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/* Селектор тега */
+p {
+    color: #333;
+    font-size: 16px;
+}
+
+/* Псевдокласс */
+.button:hover {
+    background: #2c8fb5;
+}</code></pre>
+                `
+            },
+            {
+                id: "flexbox",
+                title: "Flexbox: гибкая компоновка элементов",
+                date: "22 мая 2026",
+                description: "Полное руководство по Flexbox: основные свойства, примеры использования и типовые макеты.",
+                tags: ["CSS", "flexbox", "компоновка"],
+                content: `
+                    <h3>Flexbox — одномерная модель компоновки</h3>
+                    <p>Flexbox позволяет легко распределять пространство между элементами в контейнере.</p>
+                    <pre><code>.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.item {
+    flex: 1;
+}</code></pre>
+                `
+            },
+            {
+                id: "grid",
+                title: "CSS Grid: мощная система сеток",
+                date: "25 мая 2026",
+                description: "Осваиваем CSS Grid Layout: создание сложных сеток, управление строками и колонками.",
+                tags: ["CSS", "grid", "компоновка"],
+                content: `
+                    <h3>CSS Grid — двумерная компоновка</h3>
+                    <p>CSS Grid Layout позволяет создавать сложные макеты, управляя строками и колонками.</p>
+                    <pre><code>.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    grid-template-areas: 
+        "header header header"
+        "sidebar main main"
+        "footer footer footer";
+}</code></pre>
+                `
+            },
+            {
+                id: "responsive",
+                title: "Адаптивный дизайн: медиазапросы",
+                date: "28 мая 2026",
+                description: "Как сделать сайт удобным на любых устройствах: медиазапросы, резиновая вёрстка.",
+                tags: ["CSS", "адаптивный дизайн", "медиазапросы"],
+                content: `
+                    <h3>Адаптивность под любые экраны</h3>
+                    <p>Медиазапросы применяют стили в зависимости от характеристик устройства.</p>
+                    <pre><code>/* Mobile First */
+.container { padding: 15px; }
+
+@media (min-width: 768px) {
+    .container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}</code></pre>
+                `
+            },
+            {
+                id: "bem",
+                title: "Методология БЭМ: организация кода",
+                date: "30 мая 2026",
+                description: "Внедряем методологию БЭМ для чистого и поддерживаемого CSS-кода.",
+                tags: ["CSS", "БЭМ", "архитектура"],
+                content: `
+                    <h3>БЭМ — методология именования классов</h3>
+                    <p>БЭМ (Блок, Элемент, Модификатор) помогает создавать переиспользуемые компоненты.</p>
+                    <pre><code>.card { }
+.card__title { }
+.card__title--large { }
+.card--featured { }</code></pre>
+                `
+            }
+        ];
+
+        function getAllTags() {
+            const tags = {};
+            articles.forEach(article => {
+                article.tags.forEach(tag => {
+                    tags[tag] = (tags[tag] || 0) + 1;
+                });
+            });
+            return tags;
+        }
+
+        function renderCards(filterTag) {
+            let filtered = articles;
+            if (filterTag) {
+                filtered = articles.filter(a => a.tags.includes(filterTag));
+            }
+            if (filtered.length === 0) {
+                return '<div class="card"><div class="card__content"><p>Статей не найдено</p></div></div>';
+            }
+            return filtered.map(article => `
+                <article class="card">
+                    <div class="card__content">
+                        <h2 class="card__title">
+                            <a href="#" data-article="${article.id}">${escapeHtml(article.title)}</a>
+                        </h2>
+                        <div class="card__date">${escapeHtml(article.date)}</div>
+                        <p class="card__description">${escapeHtml(article.description)}</p>
+                        <div class="card__tags">
+                            ${article.tags.map(tag => `<a href="#" class="tag" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</a>`).join('')}
+                        </div>
+                        <a href="#" class="card__link" data-article="${article.id}">Читать далее →</a>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function renderHomePage() {
+            return `<div class="cards">${renderCards()}</div>`;
+        }
+
+        function renderAllTagsPage() {
+            const tags = getAllTags();
+            const tagList = Object.keys(tags).sort();
+            let html = `
+                <div class="breadcrumbs">
+                    <a href="#" class="breadcrumbs__link" data-page="home">Главная</a> / Все теги
+                </div>
+                <h1 class="page-title">Все теги</h1>
+                <div class="tag-cloud-page">
+                    <div class="tag-cloud">
+            `;
+            tagList.forEach(tag => {
+                let size = 'tag--size-small';
+                const count = tags[tag];
+                if (count >= 3) size = 'tag--size-large';
+                else if (count === 2) size = 'tag--size-medium';
+                html += `<a href="#" class="tag ${size}" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)} (${count})</a>`;
+            });
+            html += `</div></div>`;
+            return html;
+        }
+
+        function renderContactsPage() {
+            return `
+                <div class="breadcrumbs">
+                    <a href="#" class="breadcrumbs__link" data-page="home">Главная</a> / Контакты
+                </div>
+                <h1 class="page-title">Контакты</h1>
+                <div class="article-full">
+                    <p>По вопросам обучения пишите на почту:</p>
+                    <p><strong>study@layoutblog.ru</strong></p>
+                    <p>Telegram: @layout_teacher</p>
+                    <p style="margin-top: 15px;">Курсовая работа по дисциплине «Вёрстка страниц»</p>
+                </div>
+            `;
+        }
+
+        function renderTagPage(tagName) {
+            const filtered = articles.filter(a => a.tags.includes(tagName));
+            let cardsHtml = '';
+            filtered.forEach(article => {
+                cardsHtml += `
+                    <article class="card">
+                        <div class="card__content">
+                            <h2 class="card__title"><a href="#" data-article="${article.id}">${escapeHtml(article.title)}</a></h2>
+                            <div class="card__date">${escapeHtml(article.date)}</div>
+                            <p class="card__description">${escapeHtml(article.description)}</p>
+                            <a href="#" class="card__link" data-article="${article.id}">Читать далее →</a>
+                        </div>
+                    </article>
+                `;
+            });
+            return `
+                <div class="breadcrumbs">
+                    <a href="#" class="breadcrumbs__link" data-page="home">Главная</a> / 
+                    <a href="#" class="breadcrumbs__link" data-page="all-tags">Все теги</a> / ${escapeHtml(tagName)}
+                </div>
+                <h1 class="page-title">Статьи с тегом: ${escapeHtml(tagName)}</h1>
+                <div class="cards">${cardsHtml}</div>
+            `;
+        }
+
+        function renderArticlePage(articleId) {
+            const article = articles.find(a => a.id === articleId);
+            if (!article) return renderHomePage();
+            return `
+                <div class="breadcrumbs">
+                    <a href="#" class="breadcrumbs__link" data-page="home">Главная</a> / ${escapeHtml(article.title)}
+                </div>
+                <div class="article-full">
+                    <h1 class="article-full__title">${escapeHtml(article.title)}</h1>
+                    <div class="article-full__meta">${escapeHtml(article.date)} | Теги: ${article.tags.map(t => `<a href="#" class="tag" data-tag="${escapeHtml(t)}">${escapeHtml(t)}</a>`).join(', ')}</div>
+                    <div class="article-full__content">${article.content}</div>
+                    <div style="margin-top: 30px;"><a href="#" class="card__link" data-page="home">← На главную</a></div>
+                </div>
+            `;
+        }
+
+        function renderSidebar(currentPage, extra) {
+            let aboutText = 'Учебный блог по дисциплине «Вёрстка страниц». Статьи с примерами кода.';
+            if (currentPage === 'article') aboutText = 'Полная статья с примерами кода и теорией.';
+            if (currentPage === 'tag') aboutText = `Статьи по тегу "${escapeHtml(extra)}" с практическими примерами.`;
+            
+            const tags = getAllTags();
+            const topTags = Object.entries(tags).sort((a,b) => b[1]-a[1]).slice(0,6);
+            let cloudHtml = '<div class="tag-cloud">';
+            topTags.forEach(([tag, count]) => {
+                cloudHtml += `<a href="#" class="tag" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)} (${count})</a>`;
+            });
+            cloudHtml += `<a href="#" class="tag" data-page="all-tags">Все теги →</a></div>`;
+
+            return `
+                <div class="widget">
+                    <h3 class="widget__title">О блоге</h3>
+                    <p>${aboutText}</p>
+                </div>
+                <div class="widget">
+                    <h3 class="widget__title">Популярные теги</h3>
+                    ${cloudHtml}
+                </div>
+            `;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        let state = { view: 'home', tag: null, article: null };
+
+        function updateUI() {
+            const main = document.getElementById('mainContent');
+            const sidebar = document.getElementById('sidebarContent');
+            const subtitle = document.querySelector('.header__subtitle');
+
+            if (state.view === 'home') {
+                main.innerHTML = renderHomePage();
+                sidebar.innerHTML = renderSidebar('home', null);
+                subtitle.innerText = 'Изучай HTML, CSS и создавай современные сайты';
+            } else if (state.view === 'all-tags') {
+                main.innerHTML = renderAllTagsPage();
+                sidebar.innerHTML = renderSidebar('all-tags', null);
+                subtitle.innerText = 'Навигация по темам';
+            } else if (state.view === 'contacts') {
+                main.innerHTML = renderContactsPage();
+                sidebar.innerHTML = renderSidebar('contacts', null);
+                subtitle.innerText = 'Контакты';
+            } else if (state.view === 'tag' && state.tag) {
+                main.innerHTML = renderTagPage(state.tag);
+                sidebar.innerHTML = renderSidebar('tag', state.tag);
+                subtitle.innerText = `Статьи по тегу ${state.tag}`;
+            } else if (state.view === 'article' && state.article) {
+                main.innerHTML = renderArticlePage(state.article);
+                sidebar.innerHTML = renderSidebar('article', null);
+                const article = articles.find(a => a.id === state.article);
+                subtitle.innerText = article ? article.title : 'Статья';
+            }
+            attachEvents();
+        }
+
+        function attachEvents() {
+            document.querySelectorAll('[data-page]').forEach(el => {
+                el.onclick = (e) => {
+                    e.preventDefault();
+                    const page = el.getAttribute('data-page');
+                    if (page === 'home') state = { view: 'home', tag: null, article: null };
+                    else if (page === 'all-tags') state = { view: 'all-tags', tag: null, article: null };
+                    else if (page === 'contacts') state = { view: 'contacts', tag: null, article: null };
+                    updateUI();
+                };
+            });
+
+            document.querySelectorAll('[data-tag]').forEach(el => {
+                el.onclick = (e) => {
+                    e.preventDefault();
+                    const tag = el.getAttribute('data-tag');
+                    if (tag) state = { view: 'tag', tag: tag, article: null };
+                    updateUI();
+                };
+            });
+
+            document.querySelectorAll('[data-article]').forEach(el => {
+                el.onclick = (e) => {
+                    e.preventDefault();
+                    const articleId = el.getAttribute('data-article');
+                    if (articleId) state = { view: 'article', tag: null, article: articleId };
+                    updateUI();
+                };
+            });
+        }
+
+        updateUI();
+    </script>
+</body>
+</html>
